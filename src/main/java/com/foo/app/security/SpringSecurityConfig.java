@@ -20,7 +20,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.csrf().disable().authorizeRequests()
 				// Permitir sempre as URI seguintes:
-				.antMatchers("/res-static/**").permitAll()
+				.antMatchers("/**", "/res-static/**").permitAll()
 
 				.antMatchers("/home").hasAnyRole("ADMIN")
 //				.antMatchers("/user/**").hasAnyRole("USER")

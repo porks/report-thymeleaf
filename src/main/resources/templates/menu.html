@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="divMenu">
-	<th:block th:each="menu : ${menus}">
-	    <li class="header" th:text="${menu.label}">...</li>
-	    <li th:each="menuItem : ${menu.items}" th:onclick="'loadContent(\'' + ${menuItem.area.path} + '\');'"
-	        th:class="'clsMenu clsMenu-' + ${menuItem.area.path}">
-	        <a>
-	            <i class="fa fa-link"></i>
-	            <span th:text="${menuItem.label}">...</span>
-	        </a>
-	    </li>
-	</th:block>
+    <ul class="sidebar-menu" data-widget="tree">
+		<th:block th:each="menu : ${menus}">
+		    <li class="header" th:text="${menu.label}">...</li>
+		    <li th:each="menuItem : ${menu.items}" th:onclick="'loadContent(\'' + ${menuItem.area.id} + '\');'"
+		        th:class="'clsMenu clsMenu-' + ${menuItem.area.id}">
+		        <a>
+		            <i class="fa fa-link"></i>
+		            <span th:text="${menuItem.label}">...</span>
+		        </a>
+		    </li>
+		</th:block>
+    </ul>
 </div>
 </html>

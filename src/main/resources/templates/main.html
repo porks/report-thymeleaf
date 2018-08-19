@@ -8,17 +8,19 @@
     <title>AdminLTE 2 | Starter</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="res-static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/res-static/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="res-static/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/res-static/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/res-static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="res-static/bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/res-static/bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="res-static/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/res-static/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
             page. However, you can choose any other skin. Make sure you
             apply the skin class to the body tag so the changes take effect. -->
-    <link rel="stylesheet" href="res-static/dist/css/skins/skin-blue-light.min.css">
+    <link rel="stylesheet" href="/res-static/dist/css/skins/skin-blue-light.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,27 +34,43 @@
 
     <script>
         /*<![CDATA[*/
-        function loadContent(path) {
-            if (path == undefined)
-                path = "";
-            $("#divContent").load("/_" + path);
-            window.history.replaceState(null, null, "/" + path);
-            menuActivate(path);
+        function loadContent(mainArea_id) {
+            if (mainArea_id == undefined)
+                mainArea_id = "";
+            mainArea_content = "/" + mainArea_id + "/main";
+            $("#divContent").load(mainArea_content);
+            window.history.pushState(window.history.state, mainArea_id, "/" + mainArea_id);
+            menuActivate(mainArea_id);
         };
 
-        function menuActivate(path) {
+        function menuActivate(mainArea_id) {
             $('.clsMenu').removeClass('active')
-            $('.clsMenu-' + path).addClass('active')
+            $('.clsMenu-' + mainArea_id).addClass('active')
         }
+
+		// Recebe a função fnOnLoad e decide a melhor forma de executa-la
+		function handleOnLoad(fnOnLoad) {
+			// jQuery já está carregado, executamos imediatamente
+			if (window.jQuery) {
+				$(fnOnLoad());
+				return;
+			}
+
+		  	// Sem jQuery, vamos tentar executar a função quando a página terminar de carregar
+			window.addEventListener("load", fnOnLoad, false);
+	    }
+
     </script>
 
     <!-- Script processado pelo thymeleaf -->
     <script th:inline="javascript"> /*<![CDATA[*/
-        var current_area_path = /*[[${current_area.path}]]*/ '';
+        var mainArea_id = /*[[${mainArea.id}]]*/ '';
         // Ao terminar de carregar o DOM, ativar o menu
-        window.onload = function() {
-            menuActivate(current_area_path);
-        };
+		window.addEventListener("load", //
+			function() {
+	            menuActivate(mainArea_id);
+	        },
+	    false);
     /*]]>*/
     </script>
 </head>
@@ -96,10 +114,8 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- Sidebar Menu -->
-                <ul class="sidebar-menu" data-widget="tree">
-	                <th:block th:include="menu :: divMenu">
-					</th:block>
-                </ul>
+                <th:block th:include="menu :: divMenu">
+				</th:block>
                 <!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->
@@ -109,7 +125,7 @@
         <div class="content-wrapper">
             <!-- Main content -->
             <section class="content container-fluid">
-                <div id="divContent" th:include="${#strings.concat('/', current_area.template)} :: divContent">
+                <div id="divContent" th:include="${#strings.concat('', mainArea.template)} :: divContent">
                     <!--------------------------
                     | Your Page Content Here |
                     -------------------------->
@@ -135,15 +151,18 @@
     <!-- REQUIRED JS SCRIPTS -->
 
     <!-- jQuery 3 -->
-    <script src="res-static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/res-static/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.7 -->
-    <script src="res-static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/res-static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="/res-static/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/res-static/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="/res-static/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/res-static/bower_components/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE App -->
-    <script src="res-static/dist/js/adminlte.min.js"></script>
-
-    <!-- Optionally, you can add Slimscroll and FastClick plugins.
-                 Both of these plugins are recommended to enhance the
-                 user experience. -->
+    <script src="/res-static/dist/js/adminlte.min.js"></script>
 </body>
 
 </html>

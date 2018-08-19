@@ -2,9 +2,9 @@ package com.foo.app.model;
 
 public class MenuItem {
 	private String label; // Texto do item do menu
-	private Area area; // Recurso aberto pelo item do menu
+	private EMainArea area; // Recurso aberto pelo item do menu
 
-	public MenuItem(final String label, final Area area) {
+	public MenuItem(final String label, final EMainArea area) {
 		this.label = label;
 		this.area = area;
 	}
@@ -13,7 +13,7 @@ public class MenuItem {
 		return this.label;
 	}
 
-	public Area getArea() {
+	public EMainArea getArea() {
 		return this.area;
 	}
 }

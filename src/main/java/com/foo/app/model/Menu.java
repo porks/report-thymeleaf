@@ -7,12 +7,12 @@ public class Menu {
 	private static final List<Menu> menus = new ArrayList<>();
 	static {
 		menus.add(new Menu("Gerencial", null, //
-			new MenuItem("Blocos", Area.REP_BLOCKS), //
-			new MenuItem("Tripulantes", Area.REP_CREW)) //
+			new MenuItem("Blocos", EMainArea.REP_BLOCKS), //
+			new MenuItem("Tripulantes", EMainArea.REPORT_CREW)) //
 		);
 
 		menus.add(new Menu("Administrativo", null, //
-			new MenuItem("Permissões", Area.ADM_PERMS)) //
+			new MenuItem("Permissões", EMainArea.ADMIN_PERMS)) //
 		);
 	}
 
@@ -21,10 +21,10 @@ public class Menu {
 	}
 
 	private final String label; // Texto do menu
-	private final Area area; // Recurso aberto pelo menu
+	private final EMainArea area; // Recurso aberto pelo menu
 	private final List<MenuItem> items = new ArrayList<>();
 
-	public Menu(final String label, final Area area, final MenuItem... items) {
+	public Menu(final String label, final EMainArea area, final MenuItem... items) {
 		this.label = label;
 		this.area = area;
 		if (items == null)
@@ -37,7 +37,7 @@ public class Menu {
 		return this.label;
 	}
 
-	public Area getArea() {
+	public EMainArea getArea() {
 		return this.area;
 	}
 
